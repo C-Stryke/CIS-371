@@ -1,1 +1,2 @@
-# CIS-371
+# CIS-371 Final Project
+
