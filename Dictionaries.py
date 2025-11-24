@@ -109,3 +109,10 @@ TypeDictList = {
 "Fairy": {"Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 1/2, "Poison": 2, "Ground": 1, 
           "Flying": 1, "Psychic": 1, "Bug": 1/2, "Rock": 1, "Ghost": 1, "Dragon": 0, "Dark": 1/2, "Steel": 2, "Fairy": 1}
 }
+
+items = {
+"None": "",
+"Type_enhance": {"Gen 3-": 1.1, "Gen 4+": 1.2},
+"Plate": 1.2,
+"Gem": {"Gen 5": 1.5, "Other Gens": 1.3}
+}

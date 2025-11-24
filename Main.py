@@ -39,10 +39,17 @@ def main():
         if attackBoost in AttackBonus:
             break
         print("Please enter a valid number ")
+    while True:
+        print ("This program assumes you have the correct typing for your chosen Item")
+        print ("Type Enhancer means Black Belt, Charcoal etc. or a valid Incense")
+        item = input("What Item are you using Type Enhancer, Plate, or Gem? ")
+        if item in items or item == "":
+            break
+        print("Enter a valid Item")
     TypeTotal = calcTypeMult(MoveType, Gen, EnemyType1, EnemyType2)
     SelfTotal = calcSelfMult(SelfType1, SelfType2, MoveType, attackBoost, item, Gen)
     Total = TypeTotal * SelfTotal
-    print("Total Damage Multiplier " + str(Total))
+    print("Total Damage Multiplier " + str(round(Total,2)))
     return
 
 

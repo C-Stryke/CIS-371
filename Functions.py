@@ -36,5 +36,20 @@ def calcSelfMult(SelfType1, SelfType2, Movetype, attackBoost, item, Gen):
         Stab = 1.5
     atkBoost = AttackBonus[attackBoost]
 
-    selfMult = Stab * atkBoost
+    if item == "Type Enhancer":
+        if Gen <= 3:
+            itemdmg = items["Type_enhance"]["Gen 3-"]
+        elif Gen > 3:
+            itemdmg = items["Type_enhance"]["Gen 4+"]
+    elif item == "Plate":
+        itemdmg = items["Plate"]
+    elif item == "Gem":
+        if Gen == 5:
+            itemdmg = items["Gem"]["Gen 5"]
+        else:
+            itemdmg = items["Gem"]["Other Gens"]
+    else:
+        itemdmg = 1
+
+    selfMult = Stab * atkBoost * itemdmg
     return selfMult
