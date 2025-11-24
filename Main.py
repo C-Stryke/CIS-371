@@ -51,7 +51,7 @@ def main():
     Total = TypeTotal * SelfTotal
     print("Total Damage Multiplier " + str(round(Total,2)))
     return
-
+ 
 
 if __name__ == '__main__':
     main()
