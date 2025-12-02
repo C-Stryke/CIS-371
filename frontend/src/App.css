@@ -1,0 +1,401 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #000000 0%, #0a1628 50%, #001a3d 100%);
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: rgba(10, 22, 40, 0.6);
+  border-radius: 15px;
+  border: 2px solid #1e3a5f;
+  box-shadow: 0 8px 32px rgba(0, 123, 255, 0.2);
+}
+
+.header h1 {
+  font-size: 3rem;
+  background: linear-gradient(45deg, #4a9eff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #88b3ff;
+  font-size: 1.2rem;
+}
+
+.team-container {
+  margin-bottom: 40px;
+  padding: 25px;
+  background: rgba(10, 22, 40, 0.6);
+  border-radius: 15px;
+  border: 2px solid #1e3a5f;
+}
+
+.team-container h2 {
+  color: #4a9eff;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.pokemon-slot {
+  background: rgba(0, 26, 61, 0.8);
+  border: 2px solid #2c4f7c;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemon-slot:hover {
+  border-color: #4a9eff;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(74, 158, 255, 0.4);
+}
+
+.pokemon-slot.active {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+.pokemon-number {
+  font-weight: bold;
+  color: #88b3ff;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.pokemon-types {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.type-badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.empty-slot {
+  color: #555;
+  font-style: italic;
+}
+
+.editor-container {
+  padding: 25px;
+  background: rgba(10, 22, 40, 0.6);
+  border-radius: 15px;
+  border: 2px solid #1e3a5f;
+}
+
+.editor-container h2 {
+  color: #4a9eff;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.type-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.type-display {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.type-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.type-row label {
+  min-width: 140px;
+  color: #88b3ff;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.select-type-btn {
+  padding: 12px 24px;
+  background: rgba(0, 26, 61, 0.9);
+  border: 2px solid #2c4f7c;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+  font-weight: bold;
+}
+
+.select-type-btn:hover {
+  border-color: #4a9eff;
+  background: rgba(74, 158, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.type-picker {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 2px solid #2c4f7c;
+}
+
+.type-picker h3 {
+  color: #00d4ff;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.type-button {
+  padding: 12px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.type-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border-color: white;
+}
+
+.clear-button {
+  background: #333;
+  border-color: #555;
+}
+
+.clear-button:hover {
+  background: #444;
+}
+
+/* Pokemon Type Colors */
+.type-button.normal, .type-badge.normal { background: #A8A878; }
+.type-button.fire, .type-badge.fire { background: #F08030; }
+.type-button.water, .type-badge.water { background: #6890F0; }
+.type-button.electric, .type-badge.electric { background: #F8D030; color: #000; }
+.type-button.grass, .type-badge.grass { background: #78C850; }
+.type-button.ice, .type-badge.ice { background: #98D8D8; }
+.type-button.fighting, .type-badge.fighting { background: #C03028; }
+.type-button.poison, .type-badge.poison { background: #A040A0; }
+.type-button.ground, .type-badge.ground { background: #E0C068; color: #000; }
+.type-button.flying, .type-badge.flying { background: #A890F0; }
+.type-button.psychic, .type-badge.psychic { background: #F85888; }
+.type-button.bug, .type-badge.bug { background: #A8B820; }
+.type-button.rock, .type-badge.rock { background: #B8A038; }
+.type-button.ghost, .type-badge.ghost { background: #705898; }
+.type-button.dragon, .type-badge.dragon { background: #7038F8; }
+.type-button.dark, .type-badge.dark { background: #705848; }
+.type-button.steel, .type-badge.steel { background: #B8B8D0; color: #000; }
+.type-button.fairy, .type-badge.fairy { background: #EE99AC; color: #000; }
+
+/* Calculator Section */
+.calculator-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.left-panel, .right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.battle-options, .enemy-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.option-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-row label {
+  color: #88b3ff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.select-input {
+  padding: 12px;
+  background: rgba(0, 26, 61, 0.9);
+  border: 2px solid #2c4f7c;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.select-input:hover {
+  border-color: #4a9eff;
+  background: rgba(74, 158, 255, 0.2);
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.calculate-button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #4a9eff, #00d4ff);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
+}
+
+.calculate-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+}
+
+.calculate-button:active {
+  transform: translateY(-1px);
+}
+
+.result-display {
+  margin-top: 30px;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 2px solid #00d4ff;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.result-display h3 {
+  color: #88b3ff;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.multiplier-value {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #4a9eff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+.effectiveness {
+  font-size: 1.3rem;
+  color: #00d4ff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 1024px) {
+  .calculator-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .type-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .type-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .calculator-section {
+    grid-template-columns: 1fr;
+  }
+
+  .multiplier-value {
+    font-size: 2rem;
+  }
+}
