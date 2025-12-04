@@ -70,25 +70,22 @@ export function calcSelfMult(
 
   let itemDmg = 1;
 
-  if (item === 'Type Enhancer') {
-
-    if (gen <= 3) {
-      itemDmg = items['Type_enhance']['Gen 3-'];
-    } else if (gen > 3) {
-      itemDmg = items['Type_enhance']['Gen 4+'];
-    }
-
-  } else if (item === 'Plate') {
-    itemDmg = items['Plate'];
-
-  } else if (item === 'Gem') {
-    
-    if (gen === 5) {
-      itemDmg = items['Gem']['Gen 5'];
-    } else {
-      itemDmg = items['Gem']['Other Gens'];
-    }
-  }
+  if (item in items) {
+    if (items[item]["GenA"].includes(Gen)) 
+      {
+      if (items[item]["Type"] === SelfType1 ||
+          items[item]["Type"] === SelfType2 ||
+          items[item]["Type"] === "Any") 
+          {
+            itemdmg = items[item]["GenA Boost"];
+          }} 
+    else if (items[item]["GenB"].includes(Gen)) {
+        if (items[item]["Type"] === SelfType1 ||
+            items[item]["Type"] === SelfType2 ||
+            items[item]["Type"] === "Any") 
+            {
+            itemdmg = items[item]["GenB Boost"];
+            }}}
 
   const selfMult = stab * atkBoost * itemDmg;
   return selfMult;
