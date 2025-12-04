@@ -503,8 +503,117 @@ export const TypeDictList = {
 };
 
 export const items = {
-  None: '',
-  Type_enhance: { 'Gen 3-': 1.1, 'Gen 4+': 1.2 },
-  Plate: 1.2,
-  Gem: { 'Gen 5': 1.5, 'Other Gens': 1.3 },
+"None":{"Type": None, "GenA": [], "GenB":[], "GenA Boost": 0, "GenB Boost": 0}
+,
+"Choice Band/Choice Specs": {"Type": "Any", "GenA": [3,4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Life Orb": {"Type": "Any", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.3, "GenB Boost": 0}
+,
+"Muscle Band/Wise Glasses": {"Type": "Any", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.1, "GenB Boost": 0}
+,
+"Black Belt": {"Type": "Fighting", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Black Glasses": {"Type": "Dark", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Charcoal": {"Type": "Fire", "GenA": [2,3], "GenB": [4,54,5,6,7,8,9,6,7,8,9], "GenA Boost": 1.1,"GenB Boost": 1.2}
+,
+"Dragon Fang": {"Type": "Dragon", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Fairy Feather": {"Type": "Fairy", "GenA": [], "GenB": [9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Hard Stone/Rock Incense": {"Type": "Rock", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Magnet": {"Type": "Electric", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Metal Coat": {"Type": "Steel ", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Miracle Seed/Rose Incense": {"Type": "Grass", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Mystic Water/Sea Incense/Wave Incense": {"Type": "Water", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Never-Melt Ice": {"Type": "Ice", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Poison Barb": {"Type": "Poison", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Sharp Beak": {"Type": "Flying", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Silk Scarf": {"Type": "Normal", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Silver Powder": {"Type": "Bug", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Soft Sand": {"Type": "Ground", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Spell Tag": {"Type": "Ghost", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Twisted Spoon/Odd Incense": {"Type": "Psychic", "GenA": [2,3], "GenB": [4,5,6,7,8,9], "GenA Boost": 1.1, "GenB Boost": 1.2}
+,
+"Blank Plate": {"Type": "Normal", "GenA": [8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Fist Plate": {"Type": "Fighting", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Sky Plate": {"Type": "Flying", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Toxic Plate": {"Type": "Poison", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Earth Plate": {"Type": "Ground", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Stone Plate": {"Type": "Rock", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Insect Plate": {"Type": "Bug", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Spooky Plate": {"Type": "Ghost", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Iron Plate": {"Type": "Steel", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Flame Plate": {"Type": "Fire", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Splash Plate": {"Type": "Water", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Meadow Plate": {"Type": "Grass", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Zap Plate": {"Type": "Electric", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Mind Plate": {"Type": "Psychic", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Icicle Plate": {"Type": "Ice", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Draco Plate": {"Type": "Dragon", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Dread Plate": {"Type": "Dark", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Pixie Plate": {"Type": "Fairy", "GenA": [6,7,8,9], "GenB": [], "GenA Boost": 1.2, "GenB Boost": 0}
+,
+"Fire Gem": {"Type": "Fire", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Water Gem": {"Type": "Water", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Electric Gem": {"Type": "Electric", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Grass Gem": {"Type": "Grass", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Ice Gem": {"Type": "Ice", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Fighting Gem": {"Type": "Fighting", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Poison Gem": {"Type": "Poison", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Ground Gem": {"Type": "Ground", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Flying Gem": {"Type": "Flying", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Psychic Gem": {"Type": "Psychic", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Bug Gem": {"Type": "Bug", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Rock Gem": {"Type": "Rock", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Ghost Gem": {"Type": "Ghost", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Dragon Gem": {"Type": "Dragon", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Dark Gem": {"Type": "Dark", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Steel Gem": {"Type": "Steel", "GenA": [5], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
+,
+"Normal Gem": {"Type": "Normal", "GenA": [5], "GenB": [6,7,8,9], "GenA Boost": 1.5, "GenB Boost": 1.3}
 };
