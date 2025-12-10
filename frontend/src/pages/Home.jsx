@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Types, AttackBonus } from '../utils/dictionaries.js';
+import { Types, AttackBonus,items } from '../utils/dictionaries.js';
 import { calcTypeMult, calcSelfMult } from '../utils/functions.js';
 import '../App.css';
+
 
 function Home() {
   const [team, setTeam] = useState(
@@ -27,7 +28,7 @@ function Home() {
 
   const selectableTypes = Types.filter((type) => type !== '');
   const attackBoostOptions = Object.keys(AttackBonus);
-  const itemOptions = ['', 'Type Enhancer', 'Plate', 'Gem'];
+  const itemOptions = Object.keys(items);
   const generations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const handleTypeSelect = (type) => {

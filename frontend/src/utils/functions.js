@@ -57,7 +57,7 @@ export function calcSelfMult(
   moveType,
   attackBoost,
   item,
-  gen
+  Gen
 ) {
   let stab = 1;
 
@@ -68,25 +68,25 @@ export function calcSelfMult(
 
   const atkBoost = AttackBonus[attackBoost];
 
-  let itemDmg = 1;
+  let itemdmg = 1;
 
   if (item in items) {
     if (items[item]["GenA"].includes(Gen)) 
       {
-      if (items[item]["Type"] === SelfType1 ||
-          items[item]["Type"] === SelfType2 ||
+      if (items[item]["Type"] === selfType1 ||
+          items[item]["Type"] === selfType2 ||
           items[item]["Type"] === "Any") 
           {
             itemdmg = items[item]["GenA Boost"];
           }} 
     else if (items[item]["GenB"].includes(Gen)) {
-        if (items[item]["Type"] === SelfType1 ||
-            items[item]["Type"] === SelfType2 ||
+        if (items[item]["Type"] === selfType1 ||
+            items[item]["Type"] === selfType2 ||
             items[item]["Type"] === "Any") 
             {
             itemdmg = items[item]["GenB Boost"];
             }}}
 
-  const selfMult = stab * atkBoost * itemDmg;
+  const selfMult = stab * atkBoost * itemdmg;
   return selfMult;
 }

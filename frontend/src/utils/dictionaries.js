@@ -8,13 +8,13 @@ export const AttackBonus = {
   '-3': 2 / 5,
   '-2': 2 / 4,
   '-1': 2 / 3,
-  0: 2 / 2,
-  1: 3 / 2,
-  2: 4 / 2,
-  3: 5 / 2,
-  4: 6 / 2,
-  5: 7 / 2,
-  6: 8 / 2,
+  '0': 2 / 2,
+  '1': 3 / 2,
+  '2': 4 / 2,
+  '3': 5 / 2,
+  '4': 6 / 2,
+  '5': 7 / 2,
+  '6': 8 / 2,
 };
 
 export const Types = [
@@ -503,8 +503,6 @@ export const TypeDictList = {
 };
 
 export const items = {
-"None":{"Type": None, "GenA": [], "GenB":[], "GenA Boost": 0, "GenB Boost": 0}
-,
 "Choice Band/Choice Specs": {"Type": "Any", "GenA": [3,4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.5, "GenB Boost": 0}
 ,
 "Life Orb": {"Type": "Any", "GenA": [4,5,6,7,8,9], "GenB": [], "GenA Boost": 1.3, "GenB Boost": 0}
