@@ -93,6 +93,75 @@ def firestore_delete_document(document_path):
     response = requests.delete(url)
     return response.status_code == 200
 
+# Convert Python data to Firestore format (handles arrays and objects)
+def python_to_firestore_value(value):
+    """Convert Python value to Firestore value format"""
+    if isinstance(value, str):
+        return {"stringValue": value}
+    elif isinstance(value, int):
+        return {"integerValue": value}
+    elif isinstance(value, bool):
+        return {"booleanValue": value}
+    elif isinstance(value, list):
+        return {
+            "arrayValue": {
+                "values": [python_to_firestore_value(item) for item in value]
+            }
+        }
+    elif isinstance(value, dict):
+        fields = {}
+        for k, v in value.items():
+            fields[k] = python_to_firestore_value(v)
+        return {"mapValue": {"fields": fields}}
+    return {"nullValue": None}
+
+# Convert Firestore value to Python data
+def firestore_to_python_value(firestore_value):
+    """Convert Firestore value format to Python value"""
+    if 'stringValue' in firestore_value:
+        return firestore_value['stringValue']
+    elif 'integerValue' in firestore_value:
+        return int(firestore_value['integerValue'])
+    elif 'booleanValue' in firestore_value:
+        return firestore_value['booleanValue']
+    elif 'arrayValue' in firestore_value:
+        values = firestore_value['arrayValue'].get('values', [])
+        return [firestore_to_python_value(v) for v in values]
+    elif 'mapValue' in firestore_value:
+        fields = firestore_value['mapValue'].get('fields', {})
+        result = {}
+        for k, v in fields.items():
+            result[k] = firestore_to_python_value(v)
+        return result
+    elif 'nullValue' in firestore_value:
+        return None
+    return None
+
+# Update or create a document in Firestore
+def firestore_upsert_document(collection, query_field, query_value, data):
+    """Update existing document or create new one if it doesn't exist"""
+    # Check if document exists
+    existing_docs = firestore_query_documents(collection, query_field, query_value)
+
+    # Convert data to Firestore format
+    fields = {}
+    for key, value in data.items():
+        fields[key] = python_to_firestore_value(value)
+
+    if existing_docs and len(existing_docs) > 0:
+        # Update existing document
+        document_path = existing_docs[0]['document']['name']
+        url = f'https://firestore.googleapis.com/v1/{document_path}?updateMask.fieldPaths=team'
+        payload = {"fields": fields}
+        response = requests.patch(url, json=payload)
+        return response.json() if response.status_code == 200 else None
+    else:
+        # Create new document
+        url = f'{FIRESTORE_URL}/{collection}'
+        payload = {"fields": fields}
+        response = requests.post(url, json=payload)
+        return response.json() if response.status_code == 200 else None
+
 @app.route('/api/signup', methods=['POST'])
 def signup():
     try:
@@ -110,13 +179,11 @@ def signup():
         if len(password) < 5:
             return jsonify({'error': 'Password must be at least 5 characters'}), 400
 
-        # Check if user already exists
         existing_users = firestore_query_documents('users', 'username', username)
 
         if existing_users and len(existing_users) > 0:
             return jsonify({'error': 'Username already exists'}), 409
 
-        # Hash password
         hashed_password = hash_password(password)
 
         # Create user in Firestore
@@ -263,6 +330,94 @@ def check_auth():
     except Exception as e:
         print(f"Auth check error: {e}")
         return jsonify({'authenticated': False}), 200
+
+
+@app.route('/api/team/save', methods=['POST'])
+def save_team():
+    try:
+        # Get session from cookie
+        session_id = request.cookies.get('sessionID')
+
+        if not session_id:
+            return jsonify({'error': 'Not authenticated'}), 401
+
+        # Validate session
+        sessions = firestore_query_documents('sessions', 'sessionID', session_id)
+        if not sessions or len(sessions) == 0:
+            return jsonify({'error': 'Invalid session'}), 401
+
+        # Get username from session
+        session_doc = sessions[0]['document']
+        username = session_doc['fields']['username']['stringValue']
+
+        # Get team data from request
+        data = request.get_json()
+        team = data.get('team', [])
+
+        # Validate team has exactly 6 Pokemon
+        if len(team) != 6:
+            return jsonify({'error': 'Team must have exactly 6 Pokemon'}), 400
+
+        # Validate each Pokemon has type1 and type2 fields
+        for pokemon in team:
+            if 'type1' not in pokemon or 'type2' not in pokemon:
+                return jsonify({'error': 'Invalid Pokemon format'}), 400
+
+        # Save or update team in Firestore
+        team_data = {
+            'username': username,
+            'team': team
+        }
+
+        result = firestore_upsert_document('pokemon_teams', 'username', username, team_data)
+
+        if result:
+            return jsonify({'message': 'Team saved successfully'}), 200
+        else:
+            return jsonify({'error': 'Failed to save team'}), 500
+
+    except Exception as e:
+        print(f"Save team error: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+@app.route('/api/team/load', methods=['GET'])
+def load_team():
+    try:
+        # Get session from cookie
+        session_id = request.cookies.get('sessionID')
+
+        if not session_id:
+            return jsonify({'error': 'Not authenticated'}), 401
+
+        # Validate session
+        sessions = firestore_query_documents('sessions', 'sessionID', session_id)
+        if not sessions or len(sessions) == 0:
+            return jsonify({'error': 'Invalid session'}), 401
+
+        # Get username from session
+        session_doc = sessions[0]['document']
+        username = session_doc['fields']['username']['stringValue']
+
+        # Load team from Firestore
+        teams = firestore_query_documents('pokemon_teams', 'username', username)
+
+        if teams and len(teams) > 0:
+            team_doc = teams[0]['document']
+            team_firestore = team_doc['fields']['team']
+
+            # Convert from Firestore format to Python
+            team = firestore_to_python_value(team_firestore)
+
+            return jsonify({'team': team}), 200
+        else:
+            # No saved team, return empty team
+            empty_team = [{'type1': '', 'type2': ''} for _ in range(6)]
+            return jsonify({'team': empty_team}), 200
+
+    except Exception as e:
+        print(f"Load team error: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 
 if __name__ == '__main__':

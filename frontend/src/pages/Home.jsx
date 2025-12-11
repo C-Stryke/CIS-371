@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Types, AttackBonus,items } from '../utils/dictionaries.js';
+import { useState, useEffect } from 'react';
+import { Types, AttackBonus, items } from '../utils/dictionaries.js';
 import { calcTypeMult, calcSelfMult } from '../utils/functions.js';
 import '../App.css';
-
 
 function Home() {
   const [team, setTeam] = useState(
@@ -16,6 +15,9 @@ function Home() {
 
   const [selectedPokemon, setSelectedPokemon] = useState(0);
   const [selectingType, setSelectingType] = useState(null);
+  const [selectingEnemyType, setSelectingEnemyType] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [teamLoaded, setTeamLoaded] = useState(false);
 
   // Battle calculator state
   const [moveType, setMoveType] = useState('');
@@ -31,6 +33,71 @@ function Home() {
   const itemOptions = Object.keys(items);
   const generations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+  // Check authentication status and load team on mount
+  useEffect(() => {
+    const checkAuthAndLoadTeam = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/auth/check', {
+          credentials: 'include',
+        });
+
+        const data = await response.json();
+        setIsAuthenticated(data.authenticated);
+
+        // If authenticated, load their saved team
+        if (data.authenticated) {
+          const teamResponse = await fetch(
+            'http://localhost:5001/api/team/load',
+            {
+              credentials: 'include',
+            }
+          );
+
+          if (teamResponse.ok) {
+            const teamData = await teamResponse.json();
+            setTeam(teamData.team);
+          }
+        }
+
+        setTeamLoaded(true);
+      } catch (err) {
+        console.error('Error loading team:', err);
+        setTeamLoaded(true);
+      }
+    };
+
+    checkAuthAndLoadTeam();
+
+    // Listen for auth changes
+    window.addEventListener('authChange', checkAuthAndLoadTeam);
+    return () => window.removeEventListener('authChange', checkAuthAndLoadTeam);
+  }, []);
+
+  // Auto save team
+  useEffect(() => {
+    // Don't save on initial load or if not authenticated
+    if (!teamLoaded || !isAuthenticated) {
+      return;
+    }
+
+    const saveTeam = async () => {
+      try {
+        await fetch('http://localhost:5001/api/team/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ team }),
+        });
+      } catch (err) {
+        console.error('Error saving team:', err);
+      }
+    };
+
+    saveTeam();
+  }, [team, isAuthenticated, teamLoaded]);
+
   const handleTypeSelect = (type) => {
     const newTeam = [...team];
     newTeam[selectedPokemon] = {
@@ -41,9 +108,30 @@ function Home() {
     setSelectingType(null);
   };
 
+  const handleEnemyTypeSelect = (type) => {
+    if (selectingEnemyType === 'enemyType1') {
+      setEnemyType1(type);
+    } else if (selectingEnemyType === 'enemyType2') {
+      setEnemyType2(type);
+    }
+    setSelectingEnemyType(null);
+  };
+
   const handlePokemonSelect = (index) => {
     setSelectedPokemon(index);
     setSelectingType(null);
+  };
+
+  const clearTeam = () => {
+    setTeam(
+      Array(6)
+        .fill(null)
+        .map(() => ({
+          type1: '',
+          type2: '',
+        }))
+    );
+    setSelectedPokemon(0);
   };
 
   const calculateDamage = () => {
@@ -96,7 +184,12 @@ function Home() {
       </header>
 
       <div className='team-container'>
-        <h2>Your Team</h2>
+        <div className='team-header'>
+          <h2>Your Team</h2>
+          <button className='clear-team-button' onClick={clearTeam}>
+            Clear
+          </button>
+        </div>
         <div className='team-grid'>
           {team.map((pokemon, index) => (
             <div
@@ -257,39 +350,61 @@ function Home() {
           <div className='editor-container'>
             <h2>Defending Pokemon</h2>
 
-            <div className='enemy-selection'>
-              <div className='option-row'>
-                <label>Primary Type:</label>
-                <select
-                  value={enemyType1}
-                  onChange={(e) => setEnemyType1(e.target.value)}
-                  className='select-input'
-                >
-                  <option value=''>Select Type</option>
-                  {selectableTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
+            <div className='type-selection'>
+              <div className='type-display'>
+                <div className='type-row'>
+                  <label>Primary Type:</label>
+                  <button
+                    className='select-type-btn'
+                    onClick={() => setSelectingEnemyType('enemyType1')}
+                  >
+                    {enemyType1 || 'Select Type'}
+                  </button>
+                </div>
+                <div className='type-row'>
+                  <label>Secondary Type:</label>
+                  <button
+                    className='select-type-btn'
+                    onClick={() => setSelectingEnemyType('enemyType2')}
+                  >
+                    {enemyType2 || 'Select Type'}
+                  </button>
+                </div>
               </div>
 
-              <div className='option-row'>
-                <label>Secondary Type:</label>
-                <select
-                  value={enemyType2}
-                  onChange={(e) => setEnemyType2(e.target.value)}
-                  className='select-input'
-                >
-                  <option value=''>Select Type</option>
-                  {selectableTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              {selectingEnemyType && (
+                <div className='type-picker'>
+                  <h3>
+                    Select{' '}
+                    {selectingEnemyType === 'enemyType1'
+                      ? 'Primary'
+                      : 'Secondary'}{' '}
+                    Type
+                  </h3>
+                  <div className='type-grid'>
+                    <button
+                      className='type-button clear-button'
+                      onClick={() => handleEnemyTypeSelect('')}
+                    >
+                      Clear
+                    </button>
+                    {selectableTypes.map((type) => (
+                      <button
+                        key={type}
+                        className={`type-button ${type.toLowerCase()}`}
+                        onClick={() => handleEnemyTypeSelect(type)}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+          </div>
+
+          <div className='editor-container damage-calc-container'>
+            <h2>Damage Calculation</h2>
 
             <button className='calculate-button' onClick={calculateDamage}>
               Calculate Damage Multiplier
